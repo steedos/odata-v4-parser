@@ -9,7 +9,7 @@ import * as ODataUri from "./odataUri";
 let parserFactory = function(fn) {
     return function (source, options) {
         options = options || {};
-        let raw = new Uint8Array(source.length);
+        let raw = new Uint16Array(source.length);
         let pos = 0;
         for (let i = 0; i < source.length; i++) {
             raw[i] = source.charCodeAt(i);
