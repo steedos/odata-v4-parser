@@ -205,7 +205,7 @@ export function clone(token): Token {
 }
 
 // core definitions
-export function ALPHA(value: number): boolean { return (value >= 0x41 && value <= 0x5a) || (value >= 0x61 && value <= 0x7a); }
+export function ALPHA(value: number): boolean { return (value >= 0x41 && value <= 0x5a) || (value >= 0x61 && value <= 0x7a) || value >= 0x80; }
 export function DIGIT(value: number): boolean { return (value >= 0x30 && value <= 0x39); }
 export function HEXDIG(value: number): boolean { return DIGIT(value) || AtoF(value); }
 export function AtoF(value: number): boolean { return (value >= 0x41 && value <= 0x46) || (value >= 0x61 && value <= 0x66); }
