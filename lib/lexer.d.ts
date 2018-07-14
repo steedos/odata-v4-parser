@@ -1,3 +1,4 @@
+import Utils from "./utils";
 export declare enum TokenType {
     Literal = "Literal",
     ArrayOrObject = "ArrayOrObject",
@@ -99,6 +100,7 @@ export declare enum TokenType {
     ValueExpression = "ValueExpression",
     RootExpression = "RootExpression",
     QueryOptions = "QueryOptions",
+    CustomQueryOption = "CustomQueryOption",
     Expand = "Expand",
     ExpandItem = "ExpandItem",
     ExpandPath = "ExpandPath",
@@ -159,6 +161,8 @@ export declare enum TokenType {
     Entity = "Entity",
     Metadata = "Metadata",
 }
+export declare const LexerTokenType: typeof TokenType;
+export declare type LexerTokenType = TokenType;
 export declare class Token {
     position: number;
     next: number;
@@ -168,61 +172,71 @@ export declare class Token {
     metadata: any;
     constructor(token: any);
 }
-export declare function tokenize(value: number[] | Uint8Array, index: number, next: number, tokenValue: any, tokenType: TokenType, metadataContextContainer?: Token): Token;
-export declare function clone(token: any): Token;
-export declare function ALPHA(value: number): boolean;
-export declare function DIGIT(value: number): boolean;
-export declare function HEXDIG(value: number): boolean;
-export declare function AtoF(value: number): boolean;
-export declare function DQUOTE(value: number): boolean;
-export declare function SP(value: number): boolean;
-export declare function HTAB(value: number): boolean;
-export declare function VCHAR(value: number): boolean;
-export declare function OWS(value: number[] | Uint8Array, index: number): number;
-export declare function RWS(value: number[] | Uint8Array, index: number): number;
-export declare function BWS(value: number[] | Uint8Array, index: number): number;
-export declare function AT(value: number[] | Uint8Array, index: number): number;
-export declare function COLON(value: number[] | Uint8Array, index: number): number;
-export declare function COMMA(value: number[] | Uint8Array, index: number): number;
-export declare function EQ(value: number[] | Uint8Array, index: number): number;
-export declare function SIGN(value: number[] | Uint8Array, index: number): number;
-export declare function SEMI(value: number[] | Uint8Array, index: number): number;
-export declare function STAR(value: number[] | Uint8Array, index: number): number;
-export declare function SQUOTE(value: number[] | Uint8Array, index: number): number;
-export declare function OPEN(value: number[] | Uint8Array, index: number): number;
-export declare function CLOSE(value: number[] | Uint8Array, index: number): number;
-export declare function unreserved(value: number): boolean;
-export declare function otherDelims(value: number[] | Uint8Array, index: number): number;
-export declare function subDelims(value: number[] | Uint8Array, index: number): number;
-export declare function pctEncoded(value: number[] | Uint8Array, index: number): number;
-export declare function pctEncodedNoSQUOTE(value: number[] | Uint8Array, index: number): number;
-export declare function pctEncodedUnescaped(value: number[] | Uint8Array, index: number): number;
-export declare function pchar(value: number[] | Uint8Array, index: number): number;
-export declare function pcharNoSQUOTE(value: number[] | Uint8Array, index: number): number;
-export declare function qcharNoAMP(value: number[] | Uint8Array, index: number): number;
-export declare function qcharNoAMPDQUOTE(value: number[] | Uint8Array, index: number): number;
-export declare function base64char(value: number): boolean;
-export declare function base64b16(value: number[] | Uint8Array, index: number): number;
-export declare function base64b8(value: number[] | Uint8Array, index: number): number;
-export declare function nanInfinity(value: number[] | Uint8Array, index: number): number;
-export declare function oneToNine(value: number): boolean;
-export declare function zeroToFiftyNine(value: number[] | Uint8Array, index: number): number;
-export declare function year(value: number[] | Uint8Array, index: number): number;
-export declare function month(value: number[] | Uint8Array, index: number): number;
-export declare function day(value: number[] | Uint8Array, index: number): number;
-export declare function hour(value: number[] | Uint8Array, index: number): number;
-export declare function minute(value: number[] | Uint8Array, index: number): number;
-export declare function second(value: number[] | Uint8Array, index: number): number;
-export declare function fractionalSeconds(value: number[] | Uint8Array, index: number): number;
-export declare function geographyPrefix(value: number[] | Uint8Array, index: number): number;
-export declare function geometryPrefix(value: number[] | Uint8Array, index: number): number;
-export declare function identifierLeadingCharacter(value: number): boolean;
-export declare function identifierCharacter(value: number): boolean;
-export declare function beginObject(value: number[] | Uint8Array, index: number): number;
-export declare function endObject(value: number[] | Uint8Array, index: number): number;
-export declare function beginArray(value: number[] | Uint8Array, index: number): number;
-export declare function endArray(value: number[] | Uint8Array, index: number): number;
-export declare function quotationMark(value: number[] | Uint8Array, index: number): number;
-export declare function nameSeparator(value: number[] | Uint8Array, index: number): number;
-export declare function valueSeparator(value: number[] | Uint8Array, index: number): number;
-export declare function escape(value: number[] | Uint8Array, index: number): number;
+export declare const LexerToken: typeof Token;
+export declare type LexerToken = Token;
+export declare namespace Lexer {
+    type Token = LexerToken;
+    const Token: typeof LexerToken;
+    type TokenType = LexerTokenType;
+    const TokenType: typeof LexerTokenType;
+    function tokenize(value: Utils.SourceArray, index: number, next: number, tokenValue: any, tokenType: TokenType, metadataContextContainer?: Token): Token;
+    function clone(token: any): Token;
+    function ALPHA(value: number): boolean;
+    function DIGIT(value: number): boolean;
+    function HEXDIG(value: number): boolean;
+    function AtoF(value: number): boolean;
+    function DQUOTE(value: number): boolean;
+    function SP(value: number): boolean;
+    function HTAB(value: number): boolean;
+    function VCHAR(value: number): boolean;
+    function whitespaceLength(value: any, index: any): 3 | 1;
+    function OWS(value: Utils.SourceArray, index: number): number;
+    function RWS(value: Utils.SourceArray, index: number): number;
+    function BWS(value: Utils.SourceArray, index: number): number;
+    function AT(value: Utils.SourceArray, index: number): number;
+    function COLON(value: Utils.SourceArray, index: number): number;
+    function COMMA(value: Utils.SourceArray, index: number): number;
+    function EQ(value: Utils.SourceArray, index: number): number;
+    function SIGN(value: Utils.SourceArray, index: number): number;
+    function SEMI(value: Utils.SourceArray, index: number): number;
+    function STAR(value: Utils.SourceArray, index: number): number;
+    function SQUOTE(value: Utils.SourceArray, index: number): number;
+    function OPEN(value: Utils.SourceArray, index: number): number;
+    function CLOSE(value: Utils.SourceArray, index: number): number;
+    function unreserved(value: number): boolean;
+    function otherDelims(value: Utils.SourceArray, index: number): number;
+    function subDelims(value: Utils.SourceArray, index: number): number;
+    function pctEncoded(value: Utils.SourceArray, index: number): number;
+    function pctEncodedNoSQUOTE(value: Utils.SourceArray, index: number): number;
+    function pctEncodedUnescaped(value: Utils.SourceArray, index: number): number;
+    function pchar(value: Utils.SourceArray, index: number): number;
+    function pcharNoSQUOTE(value: Utils.SourceArray, index: number): number;
+    function qcharNoAMP(value: Utils.SourceArray, index: number): number;
+    function qcharNoAMPDQUOTE(value: Utils.SourceArray, index: number): number;
+    function base64char(value: number): boolean;
+    function base64b16(value: Utils.SourceArray, index: number): number;
+    function base64b8(value: Utils.SourceArray, index: number): number;
+    function nanInfinity(value: Utils.SourceArray, index: number): number;
+    function oneToNine(value: number): boolean;
+    function zeroToFiftyNine(value: Utils.SourceArray, index: number): number;
+    function year(value: Utils.SourceArray, index: number): number;
+    function month(value: Utils.SourceArray, index: number): number;
+    function day(value: Utils.SourceArray, index: number): number;
+    function hour(value: Utils.SourceArray, index: number): number;
+    function minute(value: Utils.SourceArray, index: number): number;
+    function second(value: Utils.SourceArray, index: number): number;
+    function fractionalSeconds(value: Utils.SourceArray, index: number): number;
+    function geographyPrefix(value: Utils.SourceArray, index: number): number;
+    function geometryPrefix(value: Utils.SourceArray, index: number): number;
+    function identifierLeadingCharacter(value: number): boolean;
+    function identifierCharacter(value: number): boolean;
+    function beginObject(value: Utils.SourceArray, index: number): number;
+    function endObject(value: Utils.SourceArray, index: number): number;
+    function beginArray(value: Utils.SourceArray, index: number): number;
+    function endArray(value: Utils.SourceArray, index: number): number;
+    function quotationMark(value: Utils.SourceArray, index: number): number;
+    function nameSeparator(value: Utils.SourceArray, index: number): number;
+    function valueSeparator(value: Utils.SourceArray, index: number): number;
+    function escape(value: Utils.SourceArray, index: number): number;
+}
+export default Lexer;

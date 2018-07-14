@@ -1,2 +1,6 @@
-import * as Lexer from "./lexer";
-export declare function odataUri(value: number[] | Uint8Array, index: number, metadataContext?: any): Lexer.Token;
+import Utils from "./utils";
+import Lexer from "./lexer";
+export declare namespace ODataUri {
+    function odataUri(value: Utils.SourceArray, index: number, metadataContext?: any): Lexer.Token;
+}
+export default ODataUri;

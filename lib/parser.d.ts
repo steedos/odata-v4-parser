@@ -1,4 +1,5 @@
-import * as Lexer from "./lexer";
+import Lexer from "./lexer";
+export declare const parserFactory: (fn: any) => (source: any, options: any) => any;
 export declare class Parser {
     odataUri(source: string, options?: any): Lexer.Token;
     resourcePath(source: string, options?: any): Lexer.Token;
